@@ -8,7 +8,19 @@
 </head>
 <body>
   <h1>Project 1</h1>
-  <ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <ul>
     <li class="border"></li>
     <li class="border"></li>
     <li class="border">Exit</li>
@@ -22,30 +34,30 @@
     <li class="grid" id="red_lorry"></li>
     <li class="grid" id="red_lorry"></li>
     <li class="grid" id="green_car"></li>
-    <li class="grid" id="blue_car"></li>
-    <li class="grid"></li>
-    <li class="border"></li>
-    <li class="border"></li>
-    <li class="grid" id="blue_car"></li>
-    <li class="grid"></li>
-    <li class="grid" id="blue_car"></li>
     <li class="grid" id="green_car"></li>
-    <li class="grid" id="blue_car"></li>
-    <li class="grid" id="green_car"></li>
-    <li class="border"></li>
-    <li class="border"></li>
-    <li class="grid" id="blue_car"></li>
     <li class="grid"></li>
-    <li class="grid" id="blue_car"></li>
-    <li class="grid" id="blue_car"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
     <li class="grid"></li>
     <li class="grid" id="green_car"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
     <li class="border"></li>
     <li class="border"></li>
     <li class="grid" id="red_lorry"></li>
     <li class="grid" id="red_lorry"></li>
     <li class="grid" id="red_lorry"></li>
-    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="green_car"></li>
     <li class="grid"></li>
     <li class="grid"></li>
     <li class="border"></li>
@@ -54,8 +66,8 @@
     <li class="grid" id="main_car"></li>
     <li class="grid"></li>
     <li class="grid"></li>
-    <li class="grid" id="green_car"></li>
-    <li class="grid" id="green_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="blue_car"></li>
     <li class="border"></li>
     <li class="border"></li>
     <li class="grid" id="green_car"></li>
@@ -73,7 +85,7 @@
     <li class="border"></li>
     <li class="border"></li>
     <li class="border"></li>
-  </ul>
+  </ul> -->
 </body>
 </html>
 
@@ -106,10 +118,11 @@
 <!-- Setup the first level. -->
 <!-- FUNCTIONS: click function, win function, moving arrays function. -->
 <!-- Moving multiple arrays at once. Sort them by calling them as halves and thirds, e.g blackCar1, blackCar2, or blueLorry1, blueLorry2, blueLorry3. Going from front to back. -->
+<!-- Can't click on the middle of a lorry, will be like clicking on an empty square. Won't do ANYTHING! -->
 <!-- Array for main car needs to be unique so that the win function can tell that the correct car is in the winning lis. (indexOf can be used, = -1 for the challenge cars. -->
 <!-- Maybe on clicking a car removes the innerHTML and clones it into the other li. Using clone so I can still click on it. -->
 <!-- All li's in the grid are clickable, but only do something if they are not empty. If it is empty the grid stays the same. -->
-<!-- Could get a value and move that using attr(). -->
+<!-- Could get a value and move that using attr('id'). -->
 
 
 
