@@ -1,0 +1,39 @@
+ul {
+  width: 320px;
+  height: 320px;
+}
+
+li {
+  width: 38px;
+  height: 38px;
+  border: 1px solid black;
+  list-style: none;
+  float: left;
+  text-align: center;
+  line-height: 38px;
+}
+
+.border {
+  border: 1px dotted black;
+  background: darkgrey;
+}
+
+#main_car {
+  background: black;
+}
+
+.exit {
+  background: yellow;
+}
+
+#red_lorry {
+  background: red;
+}
+
+#green_car {
+  background: green;
+}
+
+#blue_car {
+  background: blue;
+}

@@ -3,10 +3,77 @@
 <head>
   <title>Project 1</title>
   <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <script type="text/javascript" src="./js/app.js"></script>
 </head>
 <body>
   <h1>Project 1</h1>
+  <ul>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border">Exit</li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="red_lorry"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid" id="main_car"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="grid" id="green_car"></li>
+    <li class="grid" id="main_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid" id="blue_car"></li>
+    <li class="grid"></li>
+    <li class="grid"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+    <li class="border"></li>
+  </ul>
 </body>
 </html>
 
@@ -20,13 +87,14 @@
 <!-- Random levels, but need to make sure that it is always solvable. -->
 <!-- Need to make sure I am certain of what the rules will be. -->
 
-<!-- 6x6 grid (maybe bigger), car to escape always starts in the same position, exit position is always directly opposite the car. -->
+<!-- 6x6 grid, car to escape always starts in the same position, exit position is always directly opposite the car. -->
 <!-- Other vehicles are in random positions and need to be moved to make a path to the exit (some levels your car will need to be moved.) -->
 <!-- Need to make sure colisions are working, so if one spot in the grid is a filled array, you can not move a car into that position. -->
 <!-- Cars can only move in the direction that they're length is. -->
 <!-- Cars cannot leave the grid, so have a level around the playable grid of filled arrays. -->
 <!-- Score based on time to complete level? Or number of moves taken to complete level? -->
 <!-- End game is to move the car from the position it is in to a position 4 blocks (2 minus size of grid) away in a straight line. -->
+<!-- End position is in ul[10]. -->
 
 <!-- Pseudo Code -->
 <!-- Basic Style - is a 8x8 grid of lis, outer layer is always filled. -->
@@ -37,8 +105,11 @@
 <!-- Start with trying to get the game to work on just one level. Without a score or timer or max clicks. -->
 <!-- Setup the first level. -->
 <!-- FUNCTIONS: click function, win function, moving arrays function. -->
-<!-- Moving multiple arrays at once. Sort them by calling them by halves and thirds, e.g blackCar1, blackCar2, or blueLorry1, blueLorry2, blueLorry3. Going from front to back. -->
-<!-- Array for main car needs to be unique so that the win function can tell that the correct car is in the winning lis. -->
+<!-- Moving multiple arrays at once. Sort them by calling them as halves and thirds, e.g blackCar1, blackCar2, or blueLorry1, blueLorry2, blueLorry3. Going from front to back. -->
+<!-- Array for main car needs to be unique so that the win function can tell that the correct car is in the winning lis. (indexOf can be used, = -1 for the challenge cars. -->
+<!-- Maybe on clicking a car removes the innerHTML and clones it into the other li. Using clone so I can still click on it. -->
+<!-- All li's in the grid are clickable, but only do something if they are not empty. If it is empty the grid stays the same. -->
+<!-- Could get a value and move that using attr(). -->
 
 
 
