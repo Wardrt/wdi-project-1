@@ -1,38 +1,16 @@
 $(function(){
   setupGrid();
-  // setupMainCar();
   parkMainCar();
   setupCars();
-  parkCars();
   moveCars();
-})
+});
 
-// function start() {
-//   $(".grid").on("click", function(event) {
-//     var clickedId = event.target.id;
-//     var clickedElement = $(event.target);
-//     // console.log(clickedId);
-
-//     if (clickedElement.is("#red_lorry")) {
-//       console.log("match!!");
-//     } else if (clickedElement.is("#green_car")) {
-//       console.log("match!!");
-//     } else if (clickedElement.is("#blue_car")) {
-//       console.log("match!!");
-//     } else if (clickedElement.is("#main_car")) {
-//       console.log("match!!");
-//     } else {
-//       console.log("no match");
-//     }
-//   });
-// }
-
-var width        = 6;
-var carpark      = new Array(width*width);
-var numberOfCars = 3;
-var alphabet     = "abcdefghijklmnopqrstuvwxyz";
-var cars         = [];
-var allCarSpaces = [];
+var width                 = 6;
+var carpark               = new Array(width*width);
+var numberOfCars          = 3;
+var alphabet              = "bcdefghijklmnopqrstuvwxyz";
+var cars                  = [];
+var allCarSpaces          = [];
 
 var types = {
   car: {width: 1, height:2},
@@ -52,17 +30,11 @@ function setupGrid() {
   }
 }
 
-// function setupMainCar() {
-//   var name        = "main";
-//   var width       = 1;
-//   var height      = 2;
-//   var orientation = "NS";
-//   cars.push(new Car(name, width, height, orientation));
-// }
-
 function parkMainCar() {
   var mainCarSpace = [25, 31];
-  allCarSpaces.push(mainCarSpace);
+  var main = new Car("a", 1, 2, "NS")
+  main.space = mainCarSpace;
+  cars.push(main);
 }
 
 function setupCars() {
@@ -77,30 +49,48 @@ function setupCars() {
     }
     cars.push(new Car(alphabet[i], randomWidth, randomHeight, randomOrientation))
   }
+
+  parkCars();
 }
 
 function parkCars() {
+  var allCarSpaces = [];
+  for (var i = 0; i < cars.length; i++) {
+    allCarSpaces.push(cars[i].space);
+  }
+
   $.each(cars, function(index, car) {
-    var carSpaces = calculateCarSpaces(car);
+    // Skip first car
+    if (index === 0) return true;
 
-    var flattenedAllCarSpaces = [].concat.apply([], allCarSpaces);
-    console.log(flattenedAllCarSpaces);
+    var parked = false;
+    
+    while (!parked) {
+      var carSpaces = calculateCarSpaces(car);
 
-    while (flattenedAllCarSpaces.indexOf(carSpaces[0]) >= 0 || flattenedAllCarSpaces.indexOf(carSpaces[1]) >= 0) {
-      carSpaces = calculateCarSpaces(car);
+      var flattenedCarSpaces = [];
+      for (var i = 0; i < cars.length; i++) {
+        flattenedCarSpaces.push(cars[i].space);
+      }
+      flattenedCarSpaces = [].concat.apply([], flattenedCarSpaces);
+
+      if (flattenedCarSpaces.indexOf(carSpaces[0]) === -1 && flattenedCarSpaces.indexOf(carSpaces[1]) === -1) {
+        console.log("NOT FOUND")
+        car.space = carSpaces;
+        parked = true;
+      }
     }
-
-    allCarSpaces.push(carSpaces);
   });
 
-  console.log(allCarSpaces);
-  markCarSpaces(allCarSpaces);
+  markCarSpaces();
 }
 
 function calculateCarSpaces(car) {
   var carsSpaces = [];
   var randomIndex = Math.floor(Math.random() * carpark.length);
+  
   carsSpaces.push(randomIndex);
+  
   if (car.width > car.height) {
     if (randomIndex % width) {
       // It's on the edge
@@ -118,33 +108,73 @@ function calculateCarSpaces(car) {
   return carsSpaces;
 }
 
-function markCarSpaces(allCarSpaces) {
+function markCarSpaces() {
   var $lis = $("li");
+
+  var allCarSpaces = [];
+  for (var i = 0; i < cars.length; i++) {
+    allCarSpaces.push(cars[i].space);
+  }
+
   $.each(allCarSpaces, function(index, carSpace) {
+    var randomColor;
     var colors = ["red", "green", "blue"];
-    var randomColor = colors[Math.floor(Math.random()*colors.length)];
+
+    if (index === 0) {
+      randomColor = "black";
+    } else {
+      randomColor = colors[Math.floor(Math.random()*colors.length)];
+    }
+    
     $.each(carSpace, function(index, spaceIndex) {
       $($lis[spaceIndex]).css("background", randomColor);
     });
   })
-
 }
-
-
 
 function moveCars() {
   $(".grid").on("click", function() {
-    for (var i = 0; i < allCarSpaces.length; i++) {
-      if (Car.orientation === "NS" || "SN") {
-        allCarSpaces[i] = parseFloat(allCarSpaces[i]) + parseFloat(width);
-        console.log(allCarSpaces);
-      } else if (Car.orientation === "EW" || "WE") {
-        allCarSpaces[i] = parseFloat(allCarSpaces[i]) + 1;
-        console.log(allCarSpaces);
-      } else {
-        console.log("You have clicked an empty square.")
+    console.log(allCarSpaces)
+    var $lis = $("li");
+    var spacesArray = [].slice.call($lis)
+    var spaceIndex  = spacesArray.indexOf(this);
+    
+    console.log(spaceIndex);
+
+    var car;
+    for (var i = 0; i < cars.length; i++) {
+      if (cars[i].space.indexOf(spaceIndex) >= 0) {
+        car = cars[i];
       }
     }
+
+    // Marking the car we clicked on
+    for (var c = 0; c < car.space.length; c++) {
+      $($lis[car.space[c]]).css("background", "grey");
+    }
+
+    $($lis[spaceIndex]).css("background", "cyan");
+
+    var moveDirection = car.space.indexOf(spaceIndex)
+    console.log(moveDirection);
+
+    // if (moveDirection === 1) {
+    //   switch(car.orientation){
+    //     case "NS":
+    //   }
+    // }
+
+    // for (var i = 0; i < allCarSpaces.length; i++) {
+    //   if (Car.orientation === "NS" || "SN") {
+    //     allCarSpaces[i] = parseFloat(allCarSpaces[i]) - parseFloat(width);
+    //     console.log(allCarSpaces);
+    //   } else if (Car.orientation === "EW" || "WE") {
+    //     allCarSpaces[i] = parseFloat(allCarSpaces[i]) - 1;
+    //     console.log(allCarSpaces);
+    //   } else {
+    //     console.log("You have clicked an empty square.")
+    //   }
+    // }
   });
 }
 
