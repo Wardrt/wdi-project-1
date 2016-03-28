@@ -1,3 +1,8 @@
+body {
+  background: url(../images/background.png);
+  background-size: cover;
+}
+
 div {
   text-align: center;
 }
@@ -5,15 +10,15 @@ div {
 ul {
   margin: 0 auto;
   padding: 0;
-  width: 240px;
-  height: 240px;
-  border: 25px;
-  border-image: url(../images/border.jpg) 25% repeat;
+  width: 480px;
+  height: 480px;
+  border: 5px ridge #CDCD00;
+  /*border-image: url(../images/border.jpg) 25% repeat;*/
 }
 
 li {
-  width: 38px;
-  height: 38px;
+  width: 78px;
+  height: 78px;
   border: 1px dashed #CDCD00;
   list-style: none;
   float: left;
