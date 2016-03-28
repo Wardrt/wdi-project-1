@@ -146,19 +146,43 @@ function moveCars() {
       }
     }
 
-    // Marking the car we clicked on
+    // Get the color of the car
+    var color = $($lis[spaceIndex]).css("background-color");
+
+    // Removing the car we clicked on
     for (var c = 0; c < car.space.length; c++) {
-      $($lis[car.space[c]]).css("background", "grey");
+      $($lis[car.space[c]]).css("background", "none");
     }
 
-    $($lis[spaceIndex]).css("background", "cyan");
+    var moveDirection   = car.space.indexOf(spaceIndex);
+    var travelDirection = car.orientation[moveDirection];
+    console.log(car.space)
 
-    var moveDirection = car.space.indexOf(spaceIndex);
+    switch (travelDirection) {
+      case "N":
+        car.space = [car.space[0]-width, car.space[1]-width]
+        break;
+      case "E": 
+        car.space = [car.space[0]+1, car.space[1]+1]
+        break;
+      case "S":
+        car.space = [car.space[0]+width, car.space[1]+width]
+        break;
+      case "W":
+        car.space = [car.space[0]-1, car.space[1]-1] 
+        break;
+    }
 
-    console.log("index", spaceIndex);
-    console.log("direction", moveDirection);
-    console.log("space", car.space)
-    console.log("travel", car.orientation[moveDirection]);
+    parkCar(car, color)
+  });
+}
+
+function parkCar(car, color){
+  var $lis = $("li");
+  console.log(car.space);
+  console.log(color);
+  $.each(car.space, function(index, spaceIndex) {
+    $($lis[spaceIndex]).css("background", color);
   });
 }
 
