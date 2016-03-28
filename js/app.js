@@ -43,9 +43,9 @@ function setupCars() {
     var randomHeight = randomWidth === 2 ? 1 : 2;
     var randomOrientation;
     if (randomHeight > randomWidth) {
-      randomOrientation = ["NS", "SN"][Math.floor(Math.random()*2)]
+      randomOrientation = "NS";
     } else {
-      randomOrientation = ["EW", "WE"][Math.floor(Math.random()*2)]
+      randomOrientation = "WE";
     }
     cars.push(new Car(alphabet[i], randomWidth, randomHeight, randomOrientation))
   }
@@ -75,8 +75,8 @@ function parkCars() {
       flattenedCarSpaces = [].concat.apply([], flattenedCarSpaces);
 
       if (flattenedCarSpaces.indexOf(carSpaces[0]) === -1 && flattenedCarSpaces.indexOf(carSpaces[1]) === -1) {
-        console.log("NOT FOUND")
-        car.space = carSpaces;
+        // Sort array for the orientation
+        car.space = carSpaces.sort();
         parked = true;
       }
     }
@@ -138,8 +138,6 @@ function moveCars() {
     var $lis = $("li");
     var spacesArray = [].slice.call($lis)
     var spaceIndex  = spacesArray.indexOf(this);
-    
-    console.log(spaceIndex);
 
     var car;
     for (var i = 0; i < cars.length; i++) {
@@ -155,26 +153,12 @@ function moveCars() {
 
     $($lis[spaceIndex]).css("background", "cyan");
 
-    var moveDirection = car.space.indexOf(spaceIndex)
-    console.log(moveDirection);
+    var moveDirection = car.space.indexOf(spaceIndex);
 
-    // if (moveDirection === 1) {
-    //   switch(car.orientation){
-    //     case "NS":
-    //   }
-    // }
-
-    // for (var i = 0; i < allCarSpaces.length; i++) {
-    //   if (Car.orientation === "NS" || "SN") {
-    //     allCarSpaces[i] = parseFloat(allCarSpaces[i]) - parseFloat(width);
-    //     console.log(allCarSpaces);
-    //   } else if (Car.orientation === "EW" || "WE") {
-    //     allCarSpaces[i] = parseFloat(allCarSpaces[i]) - 1;
-    //     console.log(allCarSpaces);
-    //   } else {
-    //     console.log("You have clicked an empty square.")
-    //   }
-    // }
+    console.log("index", spaceIndex);
+    console.log("direction", moveDirection);
+    console.log("space", car.space)
+    console.log("travel", car.orientation[moveDirection]);
   });
 }
 
