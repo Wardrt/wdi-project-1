@@ -184,6 +184,7 @@ function moveCars() {
 
     parkCar(car, color)
     incrementCounter()
+    checkForWin()
   });
 }
 
@@ -199,6 +200,10 @@ function parkCar(car, color){
 function incrementCounter(){
   counter++;
   $("#moves").html(counter);
+}
+
+function checkForWin(){
+  if (cars[0].space.toString() === "1,7") alert("win");
 }
 
 // Setup color into the parkCars function? and have a key pair value for color in the car object?
