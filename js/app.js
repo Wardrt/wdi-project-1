@@ -7,7 +7,7 @@ $(function(){
 
 var width        = 6;
 var carpark      = new Array(width*width);
-var numberOfCars = 3;
+var numberOfCars = 7;
 var alphabet     = "bcdefghijklmnopqrstuvwxyz";
 var cars         = [];
 var allCarSpaces = [];
@@ -75,7 +75,10 @@ function parkCars() {
       }
       flattenedCarSpaces = [].concat.apply([], flattenedCarSpaces);
 
-      if (flattenedCarSpaces.indexOf(carSpaces[0]) === -1 && flattenedCarSpaces.indexOf(carSpaces[1]) === -1) {
+      console.log("Impossible?", (car.orientation === "NS" && carSpaces[0] % width === 1 && carSpaces[1] % width === 1))
+
+      if (flattenedCarSpaces.indexOf(carSpaces[0]) === -1 
+       && flattenedCarSpaces.indexOf(carSpaces[1]) === -1) {
         // Sort array for the orientation
         car.space = carSpaces.sort();
         parked = true;

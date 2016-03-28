@@ -1,40 +1,26 @@
+div {
+  text-align: center;
+}
+
 ul {
+  margin: 0 auto;
   padding: 0;
   width: 240px;
   height: 240px;
+  border: 25px;
+  border-image: url(../images/border.jpg) 25% repeat;
 }
 
 li {
   width: 38px;
   height: 38px;
-  border: 1px solid black;
+  border: 1px dashed #CDCD00;
   list-style: none;
   float: left;
   text-align: center;
   line-height: 38px;
 }
 
-.border {
-  border: 1px dotted black;
-  background: darkgrey;
-}
-
-#main_car {
-  background: black;
-}
-
-.exit {
-  background: yellow;
-}
-
-#red_lorry {
-  background: red;
-}
-
-#green_car {
-  background: green;
-}
-
-#blue_car {
-  background: blue;
+h1 {
+  text-align: center;
 }
