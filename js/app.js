@@ -1,7 +1,10 @@
 $(function(){
   setupGrid();
+  // setupMainCar();
+  parkMainCar();
   setupCars();
   parkCars();
+  moveCars();
 })
 
 // function start() {
@@ -26,9 +29,10 @@ $(function(){
 
 var width        = 6;
 var carpark      = new Array(width*width);
-var numberOfCars = 8;
+var numberOfCars = 3;
 var alphabet     = "abcdefghijklmnopqrstuvwxyz";
 var cars         = [];
+var allCarSpaces = [];
 
 var types = {
   car: {width: 1, height:2},
@@ -41,14 +45,27 @@ function Car(name, width, height, orientation){
   this.orientation = orientation;  
 }
 
-function setupGrid(){
+function setupGrid() {
   $("body").append("<ul class='carpark'></ul>");
   for (var i = 0; i < (width * width); i++) {
     $(".carpark").append("<li class='grid'></li>");
   }
 }
 
-function setupCars(){
+// function setupMainCar() {
+//   var name        = "main";
+//   var width       = 1;
+//   var height      = 2;
+//   var orientation = "NS";
+//   cars.push(new Car(name, width, height, orientation));
+// }
+
+function parkMainCar() {
+  var mainCarSpace = [25, 31];
+  allCarSpaces.push(mainCarSpace);
+}
+
+function setupCars() {
   for (var i = 0; i < numberOfCars; i++) {
     var randomWidth  = Math.ceil(Math.random() * 2);
     var randomHeight = randomWidth === 2 ? 1 : 2;
@@ -62,13 +79,14 @@ function setupCars(){
   }
 }
 
-function parkCars(){
-  var allCarSpaces = []
-  $.each(cars, function(index, car){
+function parkCars() {
+  $.each(cars, function(index, car) {
     var carSpaces = calculateCarSpaces(car);
 
     var flattenedAllCarSpaces = [].concat.apply([], allCarSpaces);
-    while (flattenedAllCarSpaces.indexOf(carSpaces[0]) > 0 || flattenedAllCarSpaces.indexOf(carSpaces[1]) > 0) {
+    console.log(flattenedAllCarSpaces);
+
+    while (flattenedAllCarSpaces.indexOf(carSpaces[0]) >= 0 || flattenedAllCarSpaces.indexOf(carSpaces[1]) >= 0) {
       carSpaces = calculateCarSpaces(car);
     }
 
@@ -79,7 +97,7 @@ function parkCars(){
   markCarSpaces(allCarSpaces);
 }
 
-function calculateCarSpaces(car){
+function calculateCarSpaces(car) {
   var carsSpaces = [];
   var randomIndex = Math.floor(Math.random() * carpark.length);
   carsSpaces.push(randomIndex);
@@ -91,7 +109,7 @@ function calculateCarSpaces(car){
       carsSpaces.push(randomIndex+1)
     }
   } else {
-    if (randomIndex+width > (width*width)) {
+    if (randomIndex+width >= (width*width)) {
       carsSpaces.push(randomIndex-width)
     } else {
       carsSpaces.push(randomIndex+width)
@@ -100,9 +118,9 @@ function calculateCarSpaces(car){
   return carsSpaces;
 }
 
-function markCarSpaces(allCarSpaces){
+function markCarSpaces(allCarSpaces) {
   var $lis = $("li");
-  $.each(allCarSpaces, function(index, carSpace){
+  $.each(allCarSpaces, function(index, carSpace) {
     var colors = ["red", "green", "blue"];
     var randomColor = colors[Math.floor(Math.random()*colors.length)];
     $.each(carSpace, function(index, spaceIndex) {
@@ -111,3 +129,37 @@ function markCarSpaces(allCarSpaces){
   })
 
 }
+
+
+
+function moveCars() {
+  $(".grid").on("click", function() {
+    for (var i = 0; i < allCarSpaces.length; i++) {
+      if (Car.orientation === "NS" || "SN") {
+        allCarSpaces[i] = parseFloat(allCarSpaces[i]) + parseFloat(width);
+        console.log(allCarSpaces);
+      } else if (Car.orientation === "EW" || "WE") {
+        allCarSpaces[i] = parseFloat(allCarSpaces[i]) + 1;
+        console.log(allCarSpaces);
+      } else {
+        console.log("You have clicked an empty square.")
+      }
+    }
+  });
+}
+
+// Setup color into the parkCars function? and have a key pair value for color in the car object?
+
+// At the moment the second space of the car can go into the first space of another car. So the calculateCarSpaces is only looking at the first space of the car and should look at both. And the first space of a car can go into the first space of another car.
+// How to fix?
+// 
+
+
+// On moving the cars, need to look at the orientation.
+// If NS or SN can only move width +-6.
+// If EW or WE can only move width +-1.
+// Cannot move if there is something in the space they would move into. 
+// Setup the function that will click on the cars and moved them based on orientation.
+// Add or subtract 1 or 6 to the allCarSpaces index for the car clicked.
+
+
