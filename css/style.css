@@ -1,6 +1,14 @@
 body {
   background: url(../images/background.png);
   background-size: cover;
+  font-family: 'Orbitron', sans-serif;
+  color: black;
+      text-shadow:
+      -1px -1px 0 #fff,
+      1px -1px 0 #fff,
+      -1px 1px 0 #fff,
+      1px 1px 0 #fff; 
+  margin-top: 150px;
 }
 
 div {
@@ -8,7 +16,8 @@ div {
 }
 
 ul {
-  margin: 0 auto;
+  display: inline-block;
+  margin: 0 8%;
   padding: 0;
   width: 480px;
   height: 480px;
@@ -24,8 +33,24 @@ li {
   float: left;
   text-align: center;
   line-height: 38px;
+  background-size: cover;
 }
 
 h1 {
   text-align: center;
+  display: inline-block;
+  width: 100%;
 }
+
+#left {
+  display: inline-block;
+  width: 20%;
+  height: 400px;
+  float: left;
+}
+
+#left div {
+  display: inline-block;
+  width: 100%;
+}
+

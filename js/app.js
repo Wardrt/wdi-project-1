@@ -13,10 +13,6 @@ var cars         = [];
 var allCarSpaces = [];
 var counter      = 0;
 
-var types = {
-  car: {width: 1, height:2},
-}
-
 function Car(name, width, height, orientation){
   this.name        = name;
   this.width       = width;
@@ -32,9 +28,8 @@ function setupGrid() {
 }
 
 function parkMainCar() {
-  var mainCarSpace = [25, 31];
   var main = new Car("a", 1, 2, "NS")
-  main.space = mainCarSpace;
+  main.space = [25, 31];
   cars.push(main);
 }
 
@@ -55,19 +50,14 @@ function setupCars() {
 }
 
 function parkCars() {
-  var allCarSpaces = [];
-  for (var i = 0; i < cars.length; i++) {
-    allCarSpaces.push(cars[i].space);
-  }
-
   $.each(cars, function(index, car) {
     // Skip first car
     if (index === 0) return true;
 
     var parked = false;
-    
+
     while (!parked) {
-      var carSpaces = calculateCarSpaces(car);
+      var carSpace = calculateCarSpace(car);
 
       var flattenedCarSpaces = [];
       for (var i = 0; i < cars.length; i++) {
@@ -75,12 +65,12 @@ function parkCars() {
       }
       flattenedCarSpaces = [].concat.apply([], flattenedCarSpaces);
 
-      console.log("Impossible?", (car.orientation === "NS" && carSpaces[0] % width === 1 && carSpaces[1] % width === 1))
-
-      if (flattenedCarSpaces.indexOf(carSpaces[0]) === -1 
-       && flattenedCarSpaces.indexOf(carSpaces[1]) === -1) {
+      if (flattenedCarSpaces.indexOf(carSpace[0]) === -1 
+       && flattenedCarSpaces.indexOf(carSpace[1]) === -1) {
         // Sort array for the orientation
-        car.space = carSpaces.sort();
+        car.space = carSpace.sort(function(a, b){
+          return a-b
+        });
         parked = true;
       }
     }
@@ -89,27 +79,40 @@ function parkCars() {
   markCarSpaces();
 }
 
-function calculateCarSpaces(car) {
-  var carsSpaces = [];
-  var randomIndex = Math.floor(Math.random() * carpark.length);
+function calculateCarSpace(car) {
+  var carsSpace = [];
+
+  var spaceGenerated = false;
+  var randomIndex;
+  while (!spaceGenerated) {
+    randomIndex = Math.floor(Math.random() * carpark.length);
+    if (randomIndex % width === 1 && car.orientation === "NS") {
+      // Do nothing
+    } else {
+      spaceGenerated = true;
+    }
+  }
   
-  carsSpaces.push(randomIndex);
+  carsSpace.push(randomIndex);
   
   if (car.width > car.height) {
     if (randomIndex % width) {
       // It's on the edge
-      carsSpaces.push(randomIndex-1)
+      carsSpace.push(randomIndex-1)
     } else {
-      carsSpaces.push(randomIndex+1)
+      carsSpace.push(randomIndex+1)
     }
   } else {
     if (randomIndex+width >= (width*width)) {
-      carsSpaces.push(randomIndex-width)
+      carsSpace.push(randomIndex-width)
     } else {
-      carsSpaces.push(randomIndex+width)
+      carsSpace.push(randomIndex+width)
     }
   }
-  return carsSpaces;
+
+  return carsSpace.sort(function(a, b){
+    return a-b
+  });
 }
 
 function markCarSpaces() {
@@ -121,17 +124,17 @@ function markCarSpaces() {
   }
 
   $.each(allCarSpaces, function(index, carSpace) {
-    var randomColor;
+    var randomCar;
     var colors = ["red", "green", "blue"];
 
     if (index === 0) {
-      randomColor = "black";
+      randomCar = "black";
     } else {
-      randomColor = colors[Math.floor(Math.random()*colors.length)];
+      randomCar = colors[Math.floor(Math.random()*colors.length)];
     }
-    
+
     $.each(carSpace, function(index, spaceIndex) {
-      $($lis[spaceIndex]).css("background", randomColor);
+      $($lis[spaceIndex]).css("background", randomCar);
     });
   })
 }
@@ -183,7 +186,9 @@ function moveCars() {
       $($lis[car.space[c]]).css("background", "none");
     }
 
-    car.space = tempCarSpace;
+    car.space = tempCarSpace.sort(function(a, b){
+      return a-b
+    });
 
     parkCar(car, color)
     incrementCounter()
@@ -193,8 +198,7 @@ function moveCars() {
 
 function parkCar(car, color){
   var $lis = $("li");
-  console.log(car.space);
-  console.log(color);
+  
   $.each(car.space, function(index, spaceIndex) {
     $($lis[spaceIndex]).css("background", color);
   });
@@ -206,21 +210,5 @@ function incrementCounter(){
 }
 
 function checkForWin(){
-  if (cars[0].space.toString() === "1,7") alert("win");
+  if (cars[0].space.toString() === "1,7") $("#win").html("VICTORY!");
 }
-
-// Setup color into the parkCars function? and have a key pair value for color in the car object?
-
-// At the moment the second space of the car can go into the first space of another car. So the calculateCarSpaces is only looking at the first space of the car and should look at both. And the first space of a car can go into the first space of another car.
-// How to fix?
-// 
-
-
-// On moving the cars, need to look at the orientation.
-// If NS or SN can only move width +-6.
-// If EW or WE can only move width +-1.
-// Cannot move if there is something in the space they would move into. 
-// Setup the function that will click on the cars and moved them based on orientation.
-// Add or subtract 1 or 6 to the allCarSpaces index for the car clicked.
-
-
