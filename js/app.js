@@ -5,12 +5,13 @@ $(function(){
   moveCars();
 });
 
-var width                 = 6;
-var carpark               = new Array(width*width);
-var numberOfCars          = 3;
-var alphabet              = "bcdefghijklmnopqrstuvwxyz";
-var cars                  = [];
-var allCarSpaces          = [];
+var width        = 6;
+var carpark      = new Array(width*width);
+var numberOfCars = 3;
+var alphabet     = "bcdefghijklmnopqrstuvwxyz";
+var cars         = [];
+var allCarSpaces = [];
+var counter      = 0;
 
 var types = {
   car: {width: 1, height:2},
@@ -134,7 +135,6 @@ function markCarSpaces() {
 
 function moveCars() {
   $(".grid").on("click", function() {
-    console.log(allCarSpaces)
     var $lis = $("li");
     var spacesArray = [].slice.call($lis)
     var spaceIndex  = spacesArray.indexOf(this);
@@ -148,32 +148,42 @@ function moveCars() {
 
     // Get the color of the car
     var color = $($lis[spaceIndex]).css("background-color");
+    if (color === "rgba(0, 0, 0, 0)") return false;
+
+    var moveDirection   = car.space.indexOf(spaceIndex);
+    var travelDirection = car.orientation[moveDirection];
+
+    var tempCarSpace;
+    switch (travelDirection) {
+      case "N":
+        tempCarSpace = [car.space[0]-width, car.space[1]-width]
+        break;
+      case "E": 
+        tempCarSpace = [car.space[0]+1, car.space[1]+1]
+        break;
+      case "S":
+        tempCarSpace = [car.space[0]+width, car.space[1]+width]
+        break;
+      case "W":
+        tempCarSpace = [car.space[0]-1, car.space[1]-1] 
+        break;
+    }
+
+    if ($($lis[tempCarSpace[0]]).css("background-color") !== "rgba(0, 0, 0, 0)" 
+     && $($lis[tempCarSpace[1]]).css("background-color") !== "rgba(0, 0, 0, 0)") {
+      console.log("Can't move there");
+      return false;
+    }
 
     // Removing the car we clicked on
     for (var c = 0; c < car.space.length; c++) {
       $($lis[car.space[c]]).css("background", "none");
     }
 
-    var moveDirection   = car.space.indexOf(spaceIndex);
-    var travelDirection = car.orientation[moveDirection];
-    console.log(car.space)
-
-    switch (travelDirection) {
-      case "N":
-        car.space = [car.space[0]-width, car.space[1]-width]
-        break;
-      case "E": 
-        car.space = [car.space[0]+1, car.space[1]+1]
-        break;
-      case "S":
-        car.space = [car.space[0]+width, car.space[1]+width]
-        break;
-      case "W":
-        car.space = [car.space[0]-1, car.space[1]-1] 
-        break;
-    }
+    car.space = tempCarSpace;
 
     parkCar(car, color)
+    incrementCounter()
   });
 }
 
@@ -184,6 +194,11 @@ function parkCar(car, color){
   $.each(car.space, function(index, spaceIndex) {
     $($lis[spaceIndex]).css("background", color);
   });
+}
+
+function incrementCounter(){
+  counter++;
+  $("#moves").html(counter);
 }
 
 // Setup color into the parkCars function? and have a key pair value for color in the car object?
