@@ -3,6 +3,7 @@ $(function(){
   parkMainCar();
   setupCars();
   moveCars();
+  reset()
 });
 
 var width        = 6;
@@ -210,4 +211,10 @@ function incrementCounter(){
 
 function checkForWin(){
   if (cars[0].space.toString() === "1,7") $("#win").html("VICTORY!");
+}
+
+function reset() {
+  $("#button").on("click", function() {
+    window.location.reload();
+  });
 }
