@@ -7,7 +7,7 @@ $(function(){
 
 var width        = 6;
 var carpark      = new Array(width*width);
-var numberOfCars = 7;
+var numberOfCars = 9;
 var alphabet     = "bcdefghijklmnopqrstuvwxyz";
 var cars         = [];
 var allCarSpaces = [];
