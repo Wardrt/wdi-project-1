@@ -128,7 +128,7 @@ function markCarSpaces() {
     var colors = ["red", "green", "blue"];
 
     if (index === 0) {
-      randomCar = "black";
+      randomCar = "url('./images/car_main_NS.gif')";
     } else {
       randomCar = colors[Math.floor(Math.random()*colors.length)];
     }
