@@ -17,40 +17,6 @@
 </body>
 </html>
 
-<!-- IDEAS -->
-
-<!-- Car Park Escape -->
-<!-- Car to get out of car park is obvious at the start of game. -->
-<!-- Have to click on the back of a car to move it forward and the front to move it backwards, can't move sideways. -->
-<!-- Cars take up 2 blocks, trucks/vans take up 3. -->
-<!-- Have to move the vehicles to create a straight line path to the exit. -->
-<!-- Random levels, but need to make sure that it is always solvable. -->
-<!-- Need to make sure I am certain of what the rules will be. -->
-
-<!-- 6x6 grid, car to escape always starts in the same position, exit position is always directly opposite the car. -->
-<!-- Other vehicles are in random positions and need to be moved to make a path to the exit (some levels your car will need to be moved.) -->
-<!-- Need to make sure colisions are working, so if one spot in the grid is a filled array, you can not move a car into that position. -->
-<!-- Cars can only move in the direction that they're length is. -->
-<!-- Cars cannot leave the grid, so have a level around the playable grid of filled arrays. -->
-<!-- Score based on time to complete level? Or number of moves taken to complete level? -->
-<!-- End game is to move the car from the position it is in to a position 4 blocks (2 minus size of grid) away in a straight line. -->
-<!-- End position is in ul[10]. -->
-
-<!-- Pseudo Code -->
-<!-- Basic Style - is a 8x8 grid of lis, outer layer is always filled. -->
-<!-- Car position is set before the randomiser, as is the position need to get to in order to escape. -->
-<!-- Randomiser puts cars on 60% (example) of the board, can be placed on the exit position but not on top of the car. Need to fill 2 or 3 lis at a time. -->
-<!-- Set click event that will change the array of the position clicked to empty if the position next to the far side of the vehicle is an empty array, other wise doesn't work. -->
-<!-- If above is true set the empty array to the array of the otherside of the vehicle and that array to the array of the array clicked. -->
-<!-- Start with trying to get the game to work on just one level. Without a score or timer or max clicks. -->
-<!-- Setup the first level. -->
-<!-- FUNCTIONS: click function, win function, moving arrays function. -->
-<!-- Moving multiple arrays at once. Sort them by calling them as halves and thirds, e.g blackCar1, blackCar2, or blueLorry1, blueLorry2, blueLorry3. Going from front to back. -->
-<!-- Can't click on the middle of a lorry, will be like clicking on an empty square. Won't do ANYTHING! -->
-<!-- Array for main car needs to be unique so that the win function can tell that the correct car is in the winning lis. (indexOf can be used, = -1 for the challenge cars. -->
-<!-- Maybe on clicking a car removes the innerHTML and clones it into the other li. Using clone so I can still click on it. -->
-<!-- All li's in the grid are clickable, but only do something if they are not empty. If it is empty the grid stays the same. -->
-<!-- Could get a value and move that using attr('id'). -->
 
 
 

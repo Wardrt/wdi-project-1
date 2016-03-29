@@ -177,7 +177,6 @@ function moveCars() {
 
     if ($($lis[tempCarSpace[0]]).css("background-color") !== "rgba(0, 0, 0, 0)" 
      && $($lis[tempCarSpace[1]]).css("background-color") !== "rgba(0, 0, 0, 0)") {
-      console.log("Can't move there");
       return false;
     }
 
